@@ -1,5 +1,3 @@
-# javaSwitch
+# Swerve
 
-A repository to store and share code snippets and projects between team members.
-
-Note: rather than editing someone else's branch directly, please make a separate branch/file for each snippet or whole code project
+please include the most up to date code for the swerve drivetrain within this branch (preferrably as a full project or a folder equivalent to /src)
