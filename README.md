@@ -1,5 +1,5 @@
-# javaSwitch
+# Snippets
 
-A repository to store and share code snippets and projects between team members.
+please create and add a new file for each smaller section of code you come up with
 
-Note: rather than editing someone else's branch directly, please make a separate branch/file for each snippet or whole code project
+use decent naming conventions as these are shared and potentially will be quite a lot
