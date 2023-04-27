@@ -141,6 +141,12 @@
       "names": [
         "Score"
       ]
+    },
+    {
+      "position": 3.0,
+      "names": [
+        "Pickup"
+      ]
     }
   ]
 }
