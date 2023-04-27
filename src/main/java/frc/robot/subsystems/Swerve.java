@@ -75,14 +75,6 @@ public class Swerve extends SubsystemBase {
     swerveOdometry.resetPosition(getYaw(), getPositions(), pose);
   }
 
-  public SwerveModuleState[] getStates() {
-    SwerveModuleState[] states = new SwerveModuleState[4];
-    for (SwerveModule mod : mSwerveMods) {
-      states[mod.moduleNumber] = mod.getState();
-    }
-    return states;
-  }
-
   public SwerveModulePosition[] getPositions() {
     SwerveModulePosition[] states = new SwerveModulePosition[4];
     for (SwerveModule mod : mSwerveMods) {
