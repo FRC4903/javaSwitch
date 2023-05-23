@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -23,6 +26,8 @@ public class Swerve extends SubsystemBase {
 
   private Field2d field;
 
+  public final SwerveAutoBuilder autoBuilder;
+
   public Swerve() {
     gyro = new AHRS(SPI.Port.kMXP);
     zeroGyro();
@@ -41,6 +46,19 @@ public class Swerve extends SubsystemBase {
 
     field = new Field2d();
     SmartDashboard.putData("Field", field);
+
+    // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
+    autoBuilder = new SwerveAutoBuilder(
+      this::getPose, // Pose2d supplier
+      this::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
+      Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
+      new PIDConstants(Constants.AutoConstants.kPXController, 0, 0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      new PIDConstants(Constants.AutoConstants.kPThetaController, 0, 0), // PID constants to correct for rotation error (used to create the rotation controller)
+      this::setModuleStates, // Module states consumer used to output to the drive subsystem
+      Constants.AutoConstants.autoEventMap,
+      true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+      this // The drive subsystem. Used to properly set the requirements of path following commands
+    );
   }
 
   public void drive(

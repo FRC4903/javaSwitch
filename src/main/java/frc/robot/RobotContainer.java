@@ -4,18 +4,11 @@
 
 package frc.robot;
 
-import java.util.HashMap;
-
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
-import com.pathplanner.lib.PathConstraints;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 
 import frc.robot.autos.*;
 import frc.robot.commands.*;
@@ -31,12 +24,14 @@ public class RobotContainer {
   /* Controllers */
   private final GenericHID driver = new GenericHID(0);
 
-  private final JoystickButton yButton = new JoystickButton(driver, 4);
+  // private final JoystickButton yButton = new JoystickButton(driver, 4);
 
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
 
+  private final AutoSelector autoSelector = new AutoSelector(s_Swerve, s_Swerve.autoBuilder);
+    
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
@@ -47,7 +42,7 @@ public class RobotContainer {
             () -> driver.getRawAxis(4)));
 
     // Configure the button bindings
-    configureButtonBindings();
+    configureButtonBindings();    
   }
 
   /**
@@ -68,6 +63,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new exampleAuto(s_Swerve);
+    return autoSelector.get();
   }
 }
